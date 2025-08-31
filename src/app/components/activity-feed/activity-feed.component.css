@@ -1,0 +1,12 @@
+.trades-panel {
+    margin-top: 1rem;
+}
+
+.first-row, .second-row {
+    > * {
+        margin-left: 1rem;
+    }
+}
+.data-grid {
+    margin-left: 1rem;
+}
