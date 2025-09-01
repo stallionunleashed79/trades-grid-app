@@ -17,3 +17,9 @@ export interface Trade extends TradeStatusUpdate {
   createdAt: Date;
   updatedAt: Date
 }
+
+export interface TradeResponse {
+    rowData: Trade[]
+    lastRow: number;
+    totalRows: number;
+}

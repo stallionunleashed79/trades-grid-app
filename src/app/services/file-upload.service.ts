@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { Trade } from '../models/trade';
+import { TradeResponse } from '../models/trade';
 import { TradeStatusUpdate } from '../models/trade';
 import { IGetRowsParams, IServerSideDatasource, IServerSideGetRowsParams } from 'ag-grid-community';
 
@@ -31,8 +31,8 @@ export class FileUploadService {
     return this.http.get(`${this.baseUrl1}`);
   }
 
-  getAllRecords(params: IGetRowsParams): Observable<Trade[]> {
-    return this.http.post<Trade[]>(`${this.baseUrl}/api/trades`, params);
+  getAllRecords(params: IGetRowsParams): Observable<TradeResponse> {
+    return this.http.post<TradeResponse>(`${this.baseUrl}/api/trades`, params);
   }
 
   connectToStatusStream(): Observable<TradeStatusUpdate> {
