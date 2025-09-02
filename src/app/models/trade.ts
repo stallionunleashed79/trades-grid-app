@@ -19,7 +19,7 @@ export interface Trade extends TradeStatusUpdate {
 }
 
 export interface TradeResponse {
-    rowData: Trade[]
+    data: Trade[]
     lastRow: number;
-    totalRows: number;
+    totalRecords: number;
 }

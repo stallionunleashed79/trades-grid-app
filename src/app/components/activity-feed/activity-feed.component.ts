@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild
    } from '@angular/core';
-import { Trade } from '../../models/trade';
+import { Trade, TradeResponse } from '../../models/trade';
 import { TradeStatusUpdate } from '../../models/trade';
 import { FileUploadService } from '../../services/file-upload.service';
 import { map, Observable, Subscription } from 'rxjs';
@@ -54,11 +54,11 @@ export class ActivityFeedComponent implements OnInit, OnDestroy {
 
     this.gridOptions = {
       rowSelection: 'single',
+       pagination: true,
       cacheBlockSize: 100,
       maxBlocksInCache: 2,
       rowModelType: 'infinite',
-      pagination: true, 
-      paginationAutoPageSize: true
+      paginationPageSize: 20
     };
 
   }
@@ -115,13 +115,10 @@ export class ActivityFeedComponent implements OnInit, OnDestroy {
     } 
   }
 
-    private getRowData(params: IGetRowsParams): Observable<any> {
+    private getRowData(params: IGetRowsParams): Observable<TradeResponse> {
       return this.uploadService.getAllRecords(params)
           .pipe(
-              map((res: any) => {
-                console.log(`RESPONSE ${JSON.stringify(res)}`)
-                return res.data
-              })
+              map((res: TradeResponse) => res)
             );
     }
 
@@ -129,8 +126,10 @@ export class ActivityFeedComponent implements OnInit, OnDestroy {
       return {
         getRows: (params: IGetRowsParams) => {
           params = {...params, filterModel: this.filterModel }
-          this.getRowData(params).subscribe(data => 
-            params.successCallback(data));
+          this.getRowData(params).subscribe((response: TradeResponse) => { 
+            const { data, totalRecords, lastRow } = response
+            params.successCallback(data, totalRecords)
+        });
         }
       };
     }
